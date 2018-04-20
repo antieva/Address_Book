@@ -6,16 +6,8 @@
   </head>
   <body>
     <div class = "container">
-     <h2>Create a new contact:</h2>
-     <form action='/contacts/new' method = 'post'>
-       <div class='form-group'>
-         <label for='name'>Name</label>
-         <input id='name' name='name' class='form-control' type='text'>
-       </div>
-       <div class='form-group'>
-         <label for='phoneNumber'>Phone Number</label>
-         <input id='phoneNumber' name='phoneNumber' class='form-control' type='number'>
-       </div>
+     <h2>Add another address for @Model.GetName():</h2>
+     <form action='/contacts/@Model.GetId()/address/new' method = 'post'>
        <div class='form-group'>
          <label for='street'>Street Address</label>
          <input id='street' name='street' class='form-control' type='text'>
@@ -32,8 +24,11 @@
          <label for='zip'>Zip Code</label>
          <input id='zip' name='zip' class='form-control' type='text'>
        </div>
-       <button type='submit' class='btn btn-primary'>Add Contact</button>
+       <button type='submit' class='btn btn-primary'>Add Address</button>
      </form>
+     <br>
+     <hr>
+     <p><a href='/contacts'>Return to contacts list</a></p>
     </div>
   </body>
 </html>

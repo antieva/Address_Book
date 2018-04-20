@@ -9,17 +9,17 @@ namespace AddressBook.Models
     {
         private string _name;
         private string _phoneNumber;
-        private string _address;
-        private int _id;
+        private int _contactId;
+        private List<Address> _addresses;
         private static int _counter = 0;
         private static  List<Contact> _contacts = new List<Contact> {};
 
-        public Contact (string name, string phoneNumber, string address)
+        public Contact (string name, string phoneNumber, List<Address> allAddresses)
         {
             _name = name;
             _phoneNumber = phoneNumber;
-            _address = address;
-            _id = _counter++;
+            _contactId = _counter++;
+            _addresses = allAddresses;
         }
 
         public string GetName()
@@ -42,19 +42,19 @@ namespace AddressBook.Models
            _phoneNumber = phoneNumber;
         }
 
-        public string GetAddress()
+        public List<Address> GetAddresses()
         {
-           return _address;
+           return _addresses;
         }
 
-        public void SetAddress(string address)
+        public void SetAddresses(List<Address> addresses)
         {
-           _address = address;
+           _addresses = addresses;
         }
 
         public int GetId()
         {
-            return _id;
+            return _contactId;
         }
 
         public void Save()
@@ -73,14 +73,15 @@ namespace AddressBook.Models
 
         public static Contact Find(int searchId)
         {
-            return _contacts.Single(c => c._id == searchId);
+            return _contacts.Single(c => c._contactId == searchId);
         }
+
         public static void ClearContact(int id)
         {
             int i;
             for (i = 0; i < _contacts.Count; i++)
             {
-                if (_contacts[i]._id == id) {
+                if (_contacts[i]._contactId == id) {
                     break;
                 }
              }

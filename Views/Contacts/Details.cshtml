@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Contacts</title>
-    <meta http-equiv="refresh" content="10">
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
   </head>
   <body>
@@ -10,12 +9,25 @@
       <h3>@Model.GetName() contact's details: </h3>
       <ul>
         <li>Phone Number: @Model.GetPhoneNumber()</li>
-        <li>Address: @Model.GetAddress()</li>
+        <li>Address:
+          <ul>
+            @if (@Model.GetAddresses().Count == 0) {
+              <br>
+              <p>The address list for this contact is empty.</p>
+            } else {
+              foreach (var address in @Model.GetAddresses()) {
+                <li>@address.GetStreet() @address.GetCity(), @address.GetState(), @address.GetZip(). <a href="/contacts/@Model.GetId()/@address.GetAddressId()/delete">Delete Address</a></li>
+              }
+            }
+          </ul></li>
+          <p><a href="/contacts/@Model.GetId()/address/new">Add address</a></p>
+
       </ul>
       <form action="/contacts/delete/@Model.GetId()" method="post">
       <button type="submit" name="button" class='btn btn-danger'>Delete Contact</button>
       </form>
       <br>
+      <hr>
       <p><a href='/contacts'>Return to contacts list</a></p>
     </div>
   </body>

@@ -24,7 +24,10 @@ namespace AddressBook.Controllers
         [HttpPost("/contacts/new")]
         public ActionResult Create()
         {
-            Contact newContact = new Contact (Request.Form["name"],Request.Form["phoneNumber"],Request.Form["address"]);
+            Address newAddress = new Address(Request.Form["street"], Request.Form["city"], Request.Form["state"],Request.Form["zip"]);
+            List<Address> allAddresses = new List<Address> {};
+            allAddresses.Add(newAddress);
+            Contact newContact = new Contact (Request.Form["name"],Request.Form["phoneNumber"],allAddresses);
             newContact.Save();
             List<Contact> allContacts = Contact.GetAll();
             return View("Index", allContacts);
@@ -51,6 +54,50 @@ namespace AddressBook.Controllers
              Contact.ClearAll();
              List<Contact> allContacts = Contact.GetAll();
              return View(allContacts);
+        }
+
+        [HttpGet("/contacts/{id}/address/new")]
+        public ActionResult AddressForm(int id)
+        {
+            Console.WriteLine("I am in the AddressForm");
+            Contact contact = Contact.Find(id);
+            return View(contact);
+        }
+
+        [HttpPost("/contacts/{id}/address/new")]
+        public ActionResult CreateNewAddress(int id)
+        {
+            Address newAddress = new Address(Request.Form["street"], Request.Form["city"], Request.Form["state"],Request.Form["zip"]);
+            Contact contact = Contact.Find(id);
+            List<Address> allAddresses = contact.GetAddresses();
+            foreach(var address in allAddresses)
+            {
+                Console.WriteLine(address.GetAddressId());
+            }
+            allAddresses.Add(newAddress);
+            contact.SetAddresses(allAddresses);
+            return View("Details", contact);
+        }
+
+        [HttpGet("/contacts/{contactId}/{addressId}/delete")]
+        public ActionResult DeleteAddress(int contactId, int addressId)
+        {
+             Console.WriteLine("hey");
+             Contact contact = Contact.Find(contactId);
+             Console.WriteLine(contact.GetName());
+             List<Address> allAddresses = contact.GetAddresses();
+             int i;
+             for (i = 0; i < allAddresses.Count; i++)
+             {
+                 if (allAddresses[i].GetAddressId() == addressId) {
+                     break;
+                 }
+              }
+              if (i != allAddresses.Count) {
+                 allAddresses.RemoveAt(i);
+              }
+              contact.SetAddresses(allAddresses);
+             return View("Details", contact);
         }
     }
 }
