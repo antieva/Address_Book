@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contacts</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  </head>
+  <body>
+    <div class = "container">
+      <h1>Personal Contacts</h1>
+      @if (Model.Count == 0)
+      {
+        <h3>Your Address Book is empty.</h3>
+      }
+      else
+      {
+        <h2>Your current contacts:</h2>
+        <ul>
+        @foreach(var contact in Model)
+          {
+            <li><h4><a href="/details/@contact.GetId()">@contact.GetName()</h4></li>
+          }
+        </ul>
+      }
+      <br>
+       <h3><a href="/contacts/new">Add Contact</a></h3>
+      <br>
+      <form action="/contacts/delete" method="post">
+        <button type="submit" name="button" class='btn btn-danger'>Clear My Contacts</button>
+      </form>
+      <br>
+    </div>
+  </body>
+</html>

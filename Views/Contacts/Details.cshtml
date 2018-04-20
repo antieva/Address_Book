@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contacts</title>
+    <meta http-equiv="refresh" content="10">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+  </head>
+  <body>
+    <div class="container">
+      <h3>@Model.GetName() contact's details: </h3>
+      <ul>
+        <li>Phone Number: @Model.GetPhoneNumber()</li>
+        <li>Address: @Model.GetAddress()</li>
+      </ul>
+      <form action="/contacts/delete/@Model.GetId()" method="post">
+      <button type="submit" name="button" class='btn btn-danger'>Delete Contact</button>
+      </form>
+      <br>
+      <p><a href='/contacts'>Return to contacts list</a></p>
+    </div>
+  </body>
+</html>
